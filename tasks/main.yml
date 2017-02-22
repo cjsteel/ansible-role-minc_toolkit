@@ -1,0 +1,41 @@
+---
+# file: roles/ansible-role-minc_toolkit/tasks/main.yml
+
+## update apt cache
+
+- name: "update apt cache"
+  apt: >
+    update_cache=yes
+    cache_valid_time=43200
+  tags: [ 'packages' ]
+
+## install utilities
+
+- name: "Utilities - ensure for `curl`"
+  apt: >
+    name={{ item }}
+    state={{ minc_state }}
+  with_items:
+    - curl
+tags: [ 'packages', 'utilities' ]
+
+
+- name: "Download latest stable version of minc toolkit (for ubuntu 12.04) from Github"
+  get_url:
+    url: '{{ minc_github_stable_package_url }}'
+    dest: '{{ minc_local_resource_path }}'
+  tags: [ 'packages', 'minc' ]
+
+
+- name: "Install the lastest version of minc toolkit (for Ubuntu 12.04) available on Github"
+  apt:
+    deb: '{{ minc_local_resource_path }}'
+    state: present
+  tags: [ 'packages', 'minc' ]
+
+- command: cp -r /opt/minc /opt/minc-{{ minc_version }}
+  args:
+    chdir: /
+creates: /opt/minc-{{ minc_version }}/bin/mincinfo
+
+

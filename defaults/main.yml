@@ -1,0 +1,32 @@
+---
+# file: roles/ansible-role-minc_toolkit/defaults/main.yml
+
+# minc
+
+minc_state                     : 'present'
+minc_version                   : '1.0.08'
+minc_github_stable_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.08-20160205-Ubuntu_12.04-x86_64.deb'
+minc_local_resource_directory  : 'sys/sw/ubuntu/12.04/minc-toolkit/1.0.08'
+minc_local_resource_path       : '{{ minc_local_resource_directory }}/minc-toolkit-1.0.08-20160205-Ubuntu_12.04-x86_64.deb'
+minc_remote_resource_directory : '{{ minc_local_resource_directory }}'
+
+minc_ensure_dirs_on_remote:
+
+  minc_remote_resource_dir:
+
+    state          : 'directory'
+    path           : '{{ minc_remote_resource_directory }}"
+    owner          : '{{ minc_deployment_user }}'
+    group          : '{{ minc_deployment_user }}'
+    mode           : '0755'
+
+
+minc_ensure_dirs_on_local:
+
+  minc_local_resource_dir:
+
+    state          : 'directory'
+    path           : '{{ minc_local_resource_directory }}'
+    owner          : '{{ minc_deployment_user }}'
+    group          : '{{ minc_deployment_user }}'
+    mode           : '0755'
