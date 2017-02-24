@@ -47,31 +47,14 @@
 
 ## We ensure for the cretaion of the directory /etc/skel/bin
 #
-# This is done via a dependancy the dependencies section of meta/main.yml
-#
-#- { role: skel,
-#     skel_entries:
-#      - path: /etc/skel/bin,
-#        state: directory
-#  }
-
+# done via dependancy in meta/main.yml
 
 ## Ensure for executable ~/bin/minc-toolkit-config.sh
-
-- name: "creates /etc/skel/bin/minc-toolkit-config.sh if it does not exist"
-  become: true
-  command: cat /opt/minc/minc-toolkit-config.sh > /etc/skel/bin/minc-toolkit-config.sh
-#  args:
-#    chdir: /
-#    creates: /etc/skel/bin/minc-toolkit-config.sh
+#
+# done via dependancy in meta/main.yml
 
 ## Ensure for versioned executable ~/bin/minc-toolkit-config.sh
-
-- name: "creates /etc/skel/bin/minc-toolkit-config.sh if it does not exist"
-  become: true
-  command: cat /opt/minc/minc-toolkit-config.sh > /etc/skel/bin/minc-toolkit-config-{{ minc_ver }}-{{ minc_date }}.sh
-  args:
-    chdir: /
-    creates: /etc/skel/bin/minc-toolkit-config-{{ minc_ver }}-{{ minc_date }}.sh
+#
+# done via dependancy in meta/main.yml
 
  

@@ -2,6 +2,7 @@
 
 ## Refinements
 
+* add item.state 'absent' to skel role and test.
 * add {{ minc_date }} to versioned minc copy and minc template(s) as required
 * Add path to /etc/skel/.bashrc
 * Add versioning
