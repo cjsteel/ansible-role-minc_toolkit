@@ -1,9 +1,23 @@
+---
 dependencies:
+  - role: ensure_dirs
+    tags: ['minc', 'ensure_dirs']
+    ensure_dirs_on_remote: '{{ minc_ensure_dirs_on_remote }}'
+    ensure_dirs_on_local : '{{minc_ensure_dirs_on_local }}'
 
-- { role: ensure_dirs, 
-        ensure_dirs_on_remote: "{{ minc_ensure_dirs_on_remote }}",
-        ensure_dirs_on_local : "{{ minc_ensure_dirs_on_local }}"
-  }
+  - role: skel
+    tags: ['minc', 'skel']
+    skel_entries:
+      - name: 'meta/main.yml entry for /etc/skel/bin'
+        path: '/etc/skel/bin'
+        mode: '0755'
+        state: 'directory' # options are 'directory' or 'absent'
+      - name: 'meta/main.yml entry for /etc/skel/bin'
+        src: 'templates/'
+        path: '/etc/skel/bin/'
+        mode: '0755'
+        state: 'directory' # options are 'directory' or 'absent'
+
 
 galaxy_info:
   author: your name

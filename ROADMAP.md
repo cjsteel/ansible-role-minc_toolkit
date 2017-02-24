@@ -2,6 +2,7 @@
 
 ## Refinements
 
+* add {{ minc_date }} to versioned minc copy and minc template(s) as required
 * Add path to /etc/skel/.bashrc
 * Add versioning
 * Add Ansible variables for os, release and so on.
