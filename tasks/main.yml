@@ -2,23 +2,28 @@
 # file: roles/ansible-role-minc_toolkit/tasks/main.yml
 
 ## update apt cache
+#
+# We keep this even if it is not used in order to test sudo
 
 - name: "update apt cache"
-  apt: >
-    update_cache=yes
-    cache_valid_time=43200
+  become: true
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
   tags: [ 'packages' ]
 
 ## install utilities
 
 - name: "Utilities - ensure for `curl`"
-  apt: >
-    name={{ item }}
-    state={{ minc_state }}
+  become: true
+  apt:
+    name: '{{ item }}'
+    state: '{{ minc_state }}'
   with_items:
-    - curl
-tags: [ 'packages', 'utilities' ]
+    - wget
+  tags: [ 'packages', 'utilities' ]
 
+## Gather minc-toolkit resources on remote system
 
 - name: "Download latest stable version of minc toolkit (for ubuntu 12.04) from Github"
   get_url:
@@ -28,14 +33,12 @@ tags: [ 'packages', 'utilities' ]
 
 
 - name: "Install the lastest version of minc toolkit (for Ubuntu 12.04) available on Github"
+  become: true
   apt:
     deb: '{{ minc_local_resource_path }}'
     state: present
   tags: [ 'packages', 'minc' ]
 
-- command: cp -r /opt/minc /opt/minc-{{ minc_version }}
-  args:
-    chdir: /
-creates: /opt/minc-{{ minc_version }}/bin/mincinfo
-
-
+- name: create versioned minc
+  become: true
+  command: cp -r /opt/minc /opt/minc-'{{ minc_ver }}' chdir=/ creates=/opt/minc-'{{ minc_ver }}'/bin/mincinfo

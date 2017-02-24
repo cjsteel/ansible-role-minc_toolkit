@@ -1,8 +1,8 @@
 dependencies:
 
 - { role: ensure_dirs, 
-        ensure_dirs_on_remote: "{{ display_remote_directories_description }}",
-        ensure_dirs_on_local : "{{ display_local_directories_description }}"
+        ensure_dirs_on_remote: "{{ minc_ensure_dirs_on_remote }}",
+        ensure_dirs_on_local : "{{ minc_ensure_dirs_on_local }}"
   }
 
 galaxy_info:

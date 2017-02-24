@@ -1,0 +1,9 @@
+---
+- hosts: all
+  remote_user: vagrant
+  sudo: false
+  vars:
+    - minc_deployment_user : 'vagrant'
+    - ansible_user: '{{ mince_deployment_user }}'
+  roles:
+    - ../../

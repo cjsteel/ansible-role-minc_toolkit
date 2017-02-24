@@ -3,8 +3,23 @@
 
 # minc
 
-minc_state                     : 'present'
-minc_version                   : '1.0.08'
+# ansible_distribution_major_version": "14",
+# ansible_distribution_release : "trusty",
+# ansible_distribution_version": "14.04"
+# minc-toolkit-1.9.11-20160202-Debian_7.3-x86_64.deb	
+# minc-toolkit
+# http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.08-20160205-Ubuntu_15.04-x86_64.deb
+
+minc_remote_deployment_user : 'vagrant'
+minc_local_deployment_user : 'csteel'
+
+minc_state   : 'present'
+minc_pkg     : 'minc-toolkit'
+minc_ver     : '1.0.08'
+minc_date    : '20160202'
+minc_os_fam  : '{{ ansible_os_family }}'     # Debian, MacOSX?, RedHat
+minc_os_dist : '{{ ansible_distribution }}' # Ubuntu, 
+minc_os_rel  : '{{ ansible_release }}'
 minc_github_stable_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.08-20160205-Ubuntu_12.04-x86_64.deb'
 minc_local_resource_directory  : 'sys/sw/ubuntu/12.04/minc-toolkit/1.0.08'
 minc_local_resource_path       : '{{ minc_local_resource_directory }}/minc-toolkit-1.0.08-20160205-Ubuntu_12.04-x86_64.deb'
@@ -15,9 +30,9 @@ minc_ensure_dirs_on_remote:
   minc_remote_resource_dir:
 
     state          : 'directory'
-    path           : '{{ minc_remote_resource_directory }}"
-    owner          : '{{ minc_deployment_user }}'
-    group          : '{{ minc_deployment_user }}'
+    path           : '{{ minc_remote_resource_directory }}'
+    owner          : '{{ minc_remote_deployment_user }}'
+    group          : '{{ minc_remote_deployment_user }}'
     mode           : '0755'
 
 
@@ -27,6 +42,6 @@ minc_ensure_dirs_on_local:
 
     state          : 'directory'
     path           : '{{ minc_local_resource_directory }}'
-    owner          : '{{ minc_deployment_user }}'
-    group          : '{{ minc_deployment_user }}'
+    owner          : '{{ minc_local_deployment_user }}'
+    group          : '{{ minc_local_deployment_user }}'
     mode           : '0755'
