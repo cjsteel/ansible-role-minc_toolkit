@@ -1,0 +1,10 @@
+---
+# file: minc.yml
+#
+# minc role playbook
+
+- hosts: minc
+  become: true
+  gather_facts: true
+  roles:
+    - minc

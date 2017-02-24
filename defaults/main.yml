@@ -10,8 +10,13 @@
 # minc-toolkit
 # http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.08-20160205-Ubuntu_15.04-x86_64.deb
 
-minc_remote_deployment_user : 'vagrant'
-minc_local_deployment_user : 'csteel'
+## deployment username
+#
+# 
+
+minc_deployment_username: '<deployment_user>'
+minc_remote_deployment_username : '{{ minc_deployment_username }}'
+minc_local_deployment_username : '{{ minc_deployment_username }}'
 
 minc_state   : 'present'
 minc_pkg     : 'minc-toolkit'
@@ -31,8 +36,8 @@ minc_ensure_dirs_on_remote:
 
     state          : 'directory'
     path           : '{{ minc_remote_resource_directory }}'
-    owner          : '{{ minc_remote_deployment_user }}'
-    group          : '{{ minc_remote_deployment_user }}'
+    owner          : '{{ minc_remote_deployment_username }}'
+    group          : '{{ minc_remote_deployment_username }}'
     mode           : '0755'
 
 
@@ -42,6 +47,6 @@ minc_ensure_dirs_on_local:
 
     state          : 'directory'
     path           : '{{ minc_local_resource_directory }}'
-    owner          : '{{ minc_local_deployment_user }}'
-    group          : '{{ minc_local_deployment_user }}'
+    owner          : '{{ minc_local_deployment_username }}'
+    group          : '{{ minc_local_deployment_username }}'
     mode           : '0755'

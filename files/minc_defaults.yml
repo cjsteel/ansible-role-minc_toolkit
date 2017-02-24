@@ -1,0 +1,5 @@
+---
+# group_vars/minc/minc_defaults.yml
+
+minc_deployment_username: '<deployment_user>'
+
