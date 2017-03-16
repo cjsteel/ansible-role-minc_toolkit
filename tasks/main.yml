@@ -45,7 +45,7 @@
 
 # User configuration
 
-## We ensure for the cretaion of the directory /etc/skel/bin
+## We ensure for the creation of the directory /etc/skel/bin
 #
 # done via dependancy in meta/main.yml
 

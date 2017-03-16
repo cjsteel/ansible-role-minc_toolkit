@@ -40,6 +40,15 @@ minc_ensure_dirs_on_remote:
     group          : '{{ minc_remote_deployment_username }}'
     mode           : '0755'
 
+  minc_etc_skel_bin:
+
+    state          : 'directory'
+    path           : '/etc/skel/bin'
+    owner          : 'root'
+    group          : 'root'
+    mode           : '0755'
+
+
 minc_ensure_dirs_on_local:
 
   minc_local_resource_dir:
