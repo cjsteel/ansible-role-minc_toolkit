@@ -9,4 +9,5 @@
 * Add versioning
 * Add Ansible variables for os, release and so on.
 * Add minc_state 's options **absent** and **purge**.
+* Add .alias ? 
 
