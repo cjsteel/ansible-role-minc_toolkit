@@ -1,5 +1,9 @@
 # file: roles/minc_toolkit/ROADMAP.md
 
+## Changes
+
+* minc versioning.
+
 ## Refinements
 
 * Add acemenu entry for minc
