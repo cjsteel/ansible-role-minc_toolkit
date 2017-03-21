@@ -8,23 +8,38 @@ minc_remote_deployment_user : '{{ minc_deployment_user }}'
 
 # minc
 
-minc_state   : 'present'
+minc_state   : 'purge' # 'present', 'absent', 'purge'
 
 minc_pkg     : 'minc-toolkit'
+
+## Make sure to change the version AND date!
+#
+
+#minc_ver     : '1.0.01'
+#minc_date    : '20131211'
+
 minc_ver     : '1.0.08'
 minc_date    : '20160205'
 
-minc_os_fam  : '{{ ansible_os_family }}'     # Debian, MacOSX?, RedHat
-minc_os_dist : '{{ ansible_distribution }}' # Ubuntu, 
-minc_os_rel  : '{{ ansible_release }}'
+
+# minc_os_fam  : '{{ ansible_os_family }}'     # Debian, MacOSX?, RedHat
+# minc_os_dist : '{{ ansible_distribution }}' # Ubuntu, 
+# minc_os_rel  : '{{ ansible_release }}' # 12.04
 
 # deb
 
-minc_github_stable_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+minc_github_stable_ubuntu_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+minc_github_stable_debian_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Debian_7.1-x86_64.deb'
+
+# http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.08-20160205-Ubuntu_12.04-x86_64.deb
+# http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.01-20131211-Debian_7.1-x86_64.deb
 
 
 minc_local_resource_directory  : 'sys/sw/ubuntu/12.04/minc-toolkit/{{ minc_ver }}'
-minc_local_resource_path       : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+# minc_local_resource_path       : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+minc_local_ubuntu_resource_path       : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+minc_local_debian_resource_path       : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Debian_7.1-x86_64.deb'
+
 minc_remote_resource_directory : '{{ minc_local_resource_directory }}'
 
 minc_ensure_dirs_on_remote:
