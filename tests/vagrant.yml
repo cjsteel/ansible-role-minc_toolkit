@@ -3,12 +3,15 @@
   remote_user: vagrant
   sudo: false
   pre_tasks:
+
     - set_fact: fact_controller_user="{{ lookup('env','USER') }}"
     - set_fact: fact_controller_home="{{ lookup('env','HOME') }}"
 
     - debug: var=fact_controller_user
     - debug: var=fact_controller_home
+
   vars:
     - minc_deployment_user : 'vagrant'
+
   roles:
     - ../../
