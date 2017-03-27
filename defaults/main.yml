@@ -8,7 +8,7 @@ minc_remote_deployment_user : '{{ minc_deployment_user }}'
 
 # minc
 
-minc_state   : 'purge' # 'present', 'absent', 'purge'
+minc_state   : 'present' # 'present', 'absent', 'purge'
 
 minc_pkg     : 'minc-toolkit'
 

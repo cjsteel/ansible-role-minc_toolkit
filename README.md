@@ -2,7 +2,7 @@
 ansible-role-minc_toolkit
 =========
 
-An Ansible role to install and manage mint-toolkit.
+An Ansible role to install and manage mint-toolkit. Currently includes support for minc-toolkit binaries version 1.0.08 and 
 
 
 Requirements
@@ -12,15 +12,22 @@ Requirements
 
 ## Resources
 
+* [bic-mni.github.io/](http://bic-mni.github.io/)
+* [github.com/BIC-MNI/minc-toolkit](https://github.com/BIC-MNI/minc-toolkit)
+* [github.com/BIC-MNI/minc-toolkit-testsuite](https://github.com/BIC-MNI/minc-toolkit-testsuite)
+
 ### Roles
 
 * [cjsteel/ansible-role-deployment_user]( https://github.com/cjsteel/ansible-role-deployment_user ) - role to create a deployment user.
 * [csteel/ansible-role-ensure_dirs](https://github.com/csteel/ansible-role-ensure_dirs) - role used as a dependancy to create local and remote directories.
+* cjsteel/ansible-role-skel]( https://github.com/cjsteel/ansible-role-skel ) - role to create any `/etc/skel` entries.
 
 
 
 Role Variables
 --------------
+
+**ansible-role-minc** includes 
 
 A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
@@ -29,43 +36,58 @@ A description of the settable variables for this role should go here, including 
 At minimum you will want to set the name of the `minc_deployment user`.
 
 ```shell
+ ---
 # file: roles/ansible-role-minc_toolkit/defaults/main.yml
+
+project_controller_user     : 'csteel'
+minc_controller_user        : '{{ project_controller_user }}'
+minc_local_deployment_user  : '{{ minc_controller_user }}'
+minc_remote_deployment_user : '{{ minc_deployment_user }}'
 
 # minc
 
-# ansible_distribution_major_version": "14",
-# ansible_distribution_release : "trusty",
-# ansible_distribution_version": "14.04"
-# minc-toolkit-1.9.11-20160202-Debian_7.3-x86_64.deb	
-# minc-toolkit
-# http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.08-20160205-Ubuntu_15.04-x86_64.deb
+minc_state   : 'present' # 'present', 'absent', 'purge'
 
-minc_deployment_user: '<deployment_user>'
-minc_remote_deployment_user : '{{ minc_deployment_user }}'
-minc_local_deployment_user : '{{ minc_deployment_user }}'
-
-minc_state   : 'present'
 minc_pkg     : 'minc-toolkit'
-minc_ver     : '1.0.08'
-minc_date    : '20160202'
-minc_os_fam  : '{{ ansible_os_family }}'     # Debian, MacOSX?, RedHat
-minc_os_dist : '{{ ansible_distribution }}' # Ubuntu, 
-minc_os_rel  : '{{ ansible_release }}'
-minc_github_stable_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.08-20160205-Ubuntu_12.04-x86_64.deb'
-minc_local_resource_directory  : 'sys/sw/ubuntu/12.04/minc-toolkit/1.0.08'
-minc_local_resource_path       : '{{ minc_local_resource_directory }}/minc-toolkit-1.0.08-20160205-Ubuntu_12.04-x86_64.deb'
-minc_remote_resource_directory : '{{ minc_local_resource_directory }}'
+
+## Make sure to change the version AND date!
+#
+
+minc_ver     : '1.0.01'
+minc_date    : '20131211'
+minc_depenencies : 'libtiff4'
+
+#minc_ver     : '1.0.08'
+#minc_date    : '20160205'
+
+# minc_os_fam  : '{{ ansible_os_family }}'     # Debian, MacOSX?, RedHat
+# minc_os_dist : '{{ ansible_distribution }}' # Ubuntu, 
+# minc_os_rel  : '{{ ansible_release }}' # 12.04
+
+# deb
+
+minc_github_stable_ubuntu_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+minc_github_stable_debian_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Debian_7.1-x86_64.deb'
+
+# http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.08-20160205-Ubuntu_12.04-x86_64.deb
+# http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.01-20131211-Debian_7.1-x86_64.deb
+
+
+# minc_local_resource_path      : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+minc_local_resource_directory   : 'sys/sw/ubuntu/12.04/minc-toolkit/{{ minc_ver }}'
+minc_local_ubuntu_resource_path : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+minc_local_debian_resource_path : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Debian_7.1-x86_64.deb'
+minc_remote_resource_directory  : '{{ minc_local_resource_directory }}'
 
 minc_ensure_dirs_on_remote:
 
   minc_remote_resource_dir:
 
     state          : 'directory'
-    path           : '{{ minc_remote_resource_directory }}'
+    path           : '{{ minc_local_resource_directory }}'
     owner          : '{{ minc_remote_deployment_user }}'
     group          : '{{ minc_remote_deployment_user }}'
     mode           : '0755'
-
 
 minc_ensure_dirs_on_local:
 
@@ -76,6 +98,8 @@ minc_ensure_dirs_on_local:
     owner          : '{{ minc_local_deployment_user }}'
     group          : '{{ minc_local_deployment_user }}'
     mode           : '0755'
+
+
 ```
 
 ##  project/group_vars/minc/minc_defaults.yml
@@ -164,6 +188,7 @@ Default Example
 ```shell
 ansible-playbook systems.yml -i inventory/dev --limit workstation-001
 ```
+
 
 Dependencies
 ------------
