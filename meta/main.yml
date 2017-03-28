@@ -18,13 +18,13 @@ dependencies:
         state: 'directory' # options are 'directory' or 'absent'
 
       - name: 'template /etc/skel/bin/minc-toolkit-config.sh'
-        src:  'minc-toolkit-config.sh'
+        src:  'roles/minc/templates/minc-toolkit-config.sh'
         path: '/etc/skel/bin/minc-toolkit-config.sh'
         mode: '0755'
         state: 'template' # options are 'template' or 'absent'
 
       - name:  'template /etc/skel/bin/minc-toolkit-conf-{{ minc_ver}}.sh'
-        src:   'versioned-minc-toolkit-config.sh'
+        src:   'roles/minc/templates/versioned-minc-toolkit-config.sh'
         path:  '/etc/skel/bin/minc-toolkit-config-{{ minc_ver }}.sh'
         mode:  '0755'
         state: 'template' # options are 'template' or 'absent'
