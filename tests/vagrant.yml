@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  remote_user: vagrant
+  remote_user: ubuntu
   sudo: false
   pre_tasks:
 
@@ -11,7 +11,86 @@
     - debug: var=fact_controller_home
 
   vars:
-    - minc_deployment_user : 'vagrant'
+
+    - minc_controller_user        : '{{ fact_controller_user }}'
+    - minc_deployment_user        : 'ubuntu'
+    - minc_remote_deployment_user : '{{ minc_deployment_user }}'
+
+# minc
+
+    - minc_state   : 'present' # 'present', 'absent', 'purge'
+    - minc_pkg     : 'minc-toolkit'
+
+## Make sure to change the version AND date!
+#
+
+#minc_ver     : '1.0.01'
+#minc_date    : '20131211'
+
+    - minc_ver     : '1.0.08'
+    - minc_date    : '20160205'
+
+
+# minc_os_fam  : '{{ ansible_os_family }}'     # Debian, MacOSX?, RedHat
+# minc_os_dist : '{{ ansible_distribution }}' # Ubuntu, 
+# minc_os_rel  : '{{ ansible_release }}' # 12.04
+
+# deb
+
+    - minc_github_stable_ubuntu_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+    - minc_github_stable_debian_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Debian_7.1-x86_64.deb'
+
+# http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.08-20160205-Ubuntu_12.04-x86_64.deb
+# http://packages.bic.mni.mcgill.ca/minc-toolkit/Debian/minc-toolkit-1.0.01-20131211-Debian_7.1-x86_64.deb
+
+# minc_local_resource_path      : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+    - minc_local_resource_directory   : 'sys/sw/ubuntu/12.04/minc-toolkit/{{ minc_ver }}'
+    - minc_local_ubuntu_resource_path : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
+    - minc_local_debian_resource_path : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Debian_7.1-x86_64.deb'
+    - minc_remote_resource_directory  : '{{ minc_local_resource_directory }}'
+
+    - minc_ensure_dirs_on_remote:
+
+        minc_remote_resource_dir:
+
+          state          : 'directory'
+          path           : '{{ minc_local_resource_directory }}'
+          owner          : '{{ minc_remote_deployment_user }}'
+          group          : '{{ minc_remote_deployment_user }}'
+          mode           : '0755'
+
+    - minc_ensure_dirs_on_local:
+
+        minc_local_resource_dir:
+
+          state          : 'directory'
+          path           : '{{ minc_local_resource_directory }}'
+          owner          : '{{ minc_controller_user }}'
+          group          : '{{ minc_controller_user }}'
+          mode           : '0755'
+
+    - minc_skel_entries:
+
+      - name: "meta/main.yml entry for /etc/skel/bin"
+        path  : '/etc/skel/bin'
+        user  : 'root'
+        group : 'root'
+        mode: '0755'
+        state: 'directory' # options are 'directory' or 'absent'
+
+      - name: 'template /etc/skel/bin/minc-toolkit-config.sh'
+        src:  './templates/minc-toolkit-config.sh'
+        path: '/etc/skel/bin/minc-toolkit-config.sh'
+        mode: '0755'
+        state: 'template' # options are 'template' or 'absent'
+
+      - name:  'template /etc/skel/bin/minc-toolkit-conf-{{ minc_ver}}.sh'
+        src:   './templates/versioned-minc-toolkit-config.sh'
+        path:  '/etc/skel/bin/minc-toolkit-config-{{ minc_ver }}.sh'
+        mode:  '0755'
+        state: 'template' # options are 'template' or 'absent'
+
+
 
   roles:
     - ../../
