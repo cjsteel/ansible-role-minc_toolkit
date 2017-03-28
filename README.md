@@ -173,14 +173,22 @@ Default Example
 
 ```yaml
 ---
-# project playbook for roles/minc
+# file: '{{ ansible_project }}/minc.yml'
 
 - hosts: minc
   become: true
   gather_facts: true
-  roles:
-    - minc
+  pre_tasks:
 
+    - set_fact: fact_controller_user="{{ lookup('env','USER') }}"
+    - debug: var=fact_controller_user
+
+    - set_fact: fact_controller_home="{{ lookup('env','HOME') }}"
+    - debug: var=fact_controller_home
+
+  roles:
+
+    - minc
 ```
 
 ## ansible-playbook command
@@ -207,6 +215,29 @@ dependencies:
 ```
 
 The values contained in the variables **ensure_dirs_on_remote** and **ensure_dirs_on_local** where defined previously in the file `roles/minc/defaults/main.yml`, the contents of which is listed near the top of this README.md file in the section titled **Variables** .
+
+## Testing
+
+```shell
+source /etc/skel/bin/minc-toolkit-config.sh
+mincinfo
+```
+
+output example:
+
+```shell
+
+Usage: mincinfo [<options>] <mincfile> [<mincfile> ...]
+       mincinfo -help
+```
+
+### Launch VM
+
+```shell
+vagrant up
+```
+
+
 
 
 License

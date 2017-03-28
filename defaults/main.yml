@@ -1,9 +1,8 @@
 ---
 # file: roles/ansible-role-minc_toolkit/defaults/main.yml
 
-project_controller_user     : 'csteel'
-minc_controller_user        : '{{ project_controller_user }}'
-minc_local_deployment_user  : '{{ minc_controller_user }}'
+minc_controller_user        : '{{ fact_controller_user }}'
+minc_deployment_user        : '{{ minc_controller_user }}'
 minc_remote_deployment_user : '{{ minc_deployment_user }}'
 
 # minc
@@ -57,6 +56,6 @@ minc_ensure_dirs_on_local:
 
     state          : 'directory'
     path           : '{{ minc_local_resource_directory }}'
-    owner          : '{{ minc_local_deployment_user }}'
-    group          : '{{ minc_local_deployment_user }}'
+    owner          : '{{ minc_deployment_user }}'
+    group          : '{{ minc_deployment_user }}'
     mode           : '0755'
