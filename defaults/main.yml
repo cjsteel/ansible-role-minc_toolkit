@@ -62,6 +62,45 @@ minc_ensure_dirs_on_local:
 
 minc_skel_entries:
 
+# .bash_aliases
+
+  - name : "ensure for /etc/skel/.bash_aliases"
+    path : '/etc/skel/.bash_aliases'
+    force : no
+    state: 'touch'
+
+# .bash_aliases
+
+  - name: "ensure for file name in users ~/.bash_aliases"
+    type: 'blockinfile'
+    marker: '## {mark} ANSIBLE MANAGED BLOCK for $HOME/.bash_aliases'
+    path  : "/etc/skel/.bash_aliases"
+    insertbefore: "BOF"
+    block: |
+      # file: $HOME/.bash_aliases
+      echo "$HOME/.bash_aliases aliases"
+      #
+      #
+    state: "present"
+
+# .bash_aliases
+
+  - name: "ensure we have an aliase entry for setting up freesurfer"
+    type: 'blockinfile'
+    marker: '## {mark} ANSIBLE MANAGED BLOCK for FREESURFER ALIAS srcfreesurfer'
+    path  : "/etc/skel/.bash_aliases"
+    insertafter: "EOF"
+    block: |
+      # alias to initialize freesurfer environment variables
+      #
+      alias srcfreesurfer="source $FREESURFER_HOME/SetUpFreeSurfer.sh"
+      echo "alias 'srcfreesurfer' was created"
+      #
+    state: "present"
+
+
+# /etc/skel/bin
+
   - name: "meta/main.yml entry for /etc/skel/bin"
     path  : '/etc/skel/bin'
     user  : 'root'
