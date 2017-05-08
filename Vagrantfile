@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
     config.vm.define box[:name] do |vms|
       vms.vm.box = box[:box]
       vms.vm.hostname = "ansible-#{role}-#{box[:name]}"
-      vms.vm.synced_folder ".vagrant/synced", "/home/vagrant"
+#      vms.vm.synced_folder ".vagrant/synced", "/home/ubuntu"
       vms.vm.provider "virtualbox" do |v|
         v.customize ["modifyvm", :id, "--cpuexecutioncap", box[:cpu]]
         v.customize ["modifyvm", :id, "--memory", box[:ram]]
