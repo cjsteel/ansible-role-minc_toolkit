@@ -60,14 +60,18 @@ minc_ensure_dirs_on_local:
     group          : '{{ minc_deployment_user }}'
     mode           : '0755'
 
+
+minc_bash_alias_template_src      : '{{ fact_role_path }}/templates/{{ ansible_distribution }}/{{ ansible_distribution_version }}/bash_aliases.j2'
+
 minc_skel_entries:
 
 # .bash_aliases
 
   - name : "ensure for /etc/skel/.bash_aliases"
+    src:  '{{ minc_bash_alias_template_src }}'
     path : '/etc/skel/.bash_aliases'
     force : no
-    state: 'touch'
+    state: 'copy'
 
 # .bash_aliases
 
@@ -85,19 +89,18 @@ minc_skel_entries:
 
 # .bash_aliases
 
-  - name: "ensure we have an aliase entry for setting up freesurfer"
+  - name: "ensure we have an aliase entry for minc-toolkit-1.0.88"
     type: 'blockinfile'
-    marker: '## {mark} ANSIBLE MANAGED BLOCK for FREESURFER ALIAS srcfreesurfer'
+    marker: '## {mark} ANSIBLE MANAGED BLOCK for MINC TOOLKIT ALIAS source_minc-toolkit-1.0.88'
     path  : "/etc/skel/.bash_aliases"
     insertafter: "EOF"
     block: |
-      # alias to initialize freesurfer environment variables
+      # alias to initialize minc-toolkit-1.0.88 environment variables
       #
-      alias srcfreesurfer="source $FREESURFER_HOME/SetUpFreeSurfer.sh"
-      echo "alias 'srcfreesurfer' was created"
+      alias source_minc-toolkit-1.0.88="source $HOME/bin/minc-toolkit-config-1.0.08.sh"
+      echo "alias 'source_minc-toolkit-1.0.88' created"
       #
     state: "present"
-
 
 # /etc/skel/bin
 
@@ -109,13 +112,15 @@ minc_skel_entries:
     state: 'directory' # options are 'directory' or 'absent'
 
   - name: "template /etc/skel/bin/minc-toolkit-config.sh"
-    src:  'roles/minc/templates/minc-toolkit-config.sh'
+#    src:  'roles/minc/templates/minc-toolkit-config.sh'
+    src: '{{ fact_role_path }}/templates/minc-toolkit-config.sh'
     path: '/etc/skel/bin/minc-toolkit-config.sh'
     mode: '0755'
     state: 'template' # options are 'template' or 'absent'
 
   - name:  "template /etc/skel/bin/minc-toolkit-conf-{{ minc_ver}}.sh"
-    src:   'roles/minc/templates/versioned-minc-toolkit-config.sh'
+#    src:   'roles/minc/templates/versioned-minc-toolkit-config.sh'
+    src: '{{ fact_role_path }}/templates/versioned-minc-toolkit-config.sh'
     path:  '/etc/skel/bin/minc-toolkit-config-{{ minc_ver }}.sh'
     mode:  '0755'
     state: 'template' # options are 'template' or 'absent'
