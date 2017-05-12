@@ -6,7 +6,11 @@
 .prv
 *.retry
 .vault
+
+# log files
+
 ansible.log
+ubuntu-xenial-16.04-cloudimg-console.log
 
 # directories
 
