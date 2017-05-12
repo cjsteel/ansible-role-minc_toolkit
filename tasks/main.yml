@@ -87,52 +87,36 @@
   when: minc_state == 'absent' or minc_state == 'purge'
   ignore_errors: yes
 
-#####
+#  	path - Before 2.3 this option was only usable as dest, destfile and name.
+- name: remove file name in users bash_aliases
+  blockinfile:
+    dest  : "/etc/skel/.bash_aliases"
+    marker: "## {mark} ANSIBLE MANAGED BLOCK for $HOME/.bash_aliases"
+  when: minc_state == 'absent' or minc_state == 'purge'
+  ignore_errors: yes
 
-# .bash_aliases
-
-- name: "ensure for file name in users ~/.bash_aliases"
-  type: 'blockinfile'
-  marker: '## {mark} ANSIBLE MANAGED BLOCK for $HOME/.bash_aliases'
-  path  : "/etc/skel/.bash_aliases"
-  insertbefore: "BOF"
-  block: |
-    # file: $HOME/.bash_aliases
-    echo "$HOME/.bash_aliases aliases"
-    #
-    #
-  state: "absent"
+- name: "remove aliase entry for minc-toolkit-1.0.88"
+  blockinfile:
+    dest  : "/etc/skel/.bash_aliases"
+    marker: '## {mark} ANSIBLE MANAGED BLOCK for MINC TOOLKIT ALIAS source_minc-toolkit-1.0.88'
   when: minc_state == 'absent' or minc_state == 'purge'
 
-# .bash_aliases
+#  minc-toolkit-config-1.0.08.sh
 
-- name: "ensure we have an aliase entry for minc-toolkit-1.0.88"
-  type: 'blockinfile'
-  marker: '## {mark} ANSIBLE MANAGED BLOCK for MINC TOOLKIT ALIAS source_minc-toolkit-1.0.88'
-  path  : "/etc/skel/.bash_aliases"
-  insertafter: "EOF"
-  block: |
-    # alias to initialize minc-toolkit-1.0.88 environment variables
-    #
-    alias source_minc-toolkit-1.0.88="source $HOME/bin/minc-toolkit-config-1.0.08.sh"
-    echo "alias 'source_minc-toolkit-1.0.88' created"
-    #
-  state: "absent"
+- name: "remove /etc/skel/minc-toolkit-config-1.0.08.sh"
+  become: true
+  command: rm -R /etc/skel/minc-toolkit-config-1.0.08.sh
   when: minc_state == 'absent' or minc_state == 'purge'
+  ignore_errors: yes
 
-- name: "template /etc/skel/bin/minc-toolkit-config.sh"
-  src: '{{ fact_role_path }}/templates/minc-toolkit-config.sh'
-  path: '/etc/skel/bin/minc-toolkit-config.sh'
-  mode: '0755'
-  state: "absent"
-  when: minc_state == 'absent' or minc_state == 'purge'
+#  minc-toolkit-config-1.0.08.sh
 
-- name:  "template /etc/skel/bin/minc-toolkit-conf-{{ minc_ver}}.sh"
-  src: '{{ fact_role_path }}/templates/versioned-minc-toolkit-config.sh'
-  path:  '/etc/skel/bin/minc-toolkit-config-{{ minc_ver }}.sh'
-  mode:  '0755'
-  state: "absent"
+- name: "remove /etc/skel/minc-toolkit-config.sh"
+  become: true
+  command: rm -R /etc/skel/minc-toolkit-config.sh
   when: minc_state == 'absent' or minc_state == 'purge'
+  ignore_errors: yes
+
 
 # User configuration
 
