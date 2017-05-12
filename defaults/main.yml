@@ -82,23 +82,34 @@ minc_skel_entries:
     insertbefore: "BOF"
     block: |
       # file: $HOME/.bash_aliases
-      echo "$HOME/.bash_aliases aliases"
-      #
       #
     state: "present"
 
 # .bash_aliases
 
-  - name: "ensure we have an aliase entry for minc-toolkit-1.0.88"
+  - name: "ensure we have an aliase entry for default minc-toolkit version"
     type: 'blockinfile'
-    marker: '## {mark} ANSIBLE MANAGED BLOCK for MINC TOOLKIT ALIAS source_minc-toolkit-1.0.88'
+    marker: '## {mark} ANSIBLE MANAGED BLOCK for default MINC TOOLKIT ALIAS src_minc-toolkit'
     path  : "/etc/skel/.bash_aliases"
     insertafter: "EOF"
     block: |
-      # alias to initialize minc-toolkit-1.0.88 environment variables
+      # alias to initialize default minc-toolkit environment variables
       #
-      alias source_minc-toolkit-1.0.88="source $HOME/bin/minc-toolkit-config-1.0.08.sh"
-      echo "alias 'source_minc-toolkit-1.0.88' created"
+      alias src_minctk="source /opt/minc/minc-toolkit-config.sh"
+      echo "alias 'src_minctk' created"
+      #
+    state: "present"
+
+  - name: "ensure we have an aliase entry for minc-toolkit-{{ minc_ver }}"
+    type: 'blockinfile'
+    marker: '## {mark} ANSIBLE MANAGED BLOCK for MINC TOOLKIT ALIAS src_minctk-{{ minc_ver }}'
+    path  : "/etc/skel/.bash_aliases"
+    insertafter: "EOF"
+    block: |
+      # alias to initialize minc-toolkit-{{ minc_ver }} environment variables
+      #
+      alias src_minctk-{{ minc_ver }}="source /opt/minc-{{ minc_ver }}/minc-toolkit-config-{{ minc_ver }}.sh"
+      echo "alias 'src_minctk-{{ minc_ver }}' created"
       #
     state: "present"
 
