@@ -87,7 +87,12 @@
   when: minc_state == 'absent' or minc_state == 'purge'
   ignore_errors: yes
 
+<<<<<<< HEAD
 #  	path - Before 2.3 this option was only usable as dest, destfile and name.
+=======
+# path - Before 2.3 this option was only usable as dest, destfile and name.
+
+>>>>>>> 71aef5c2168d0115a988019cf70724db7af2b537
 - name: remove file name in users bash_aliases
   blockinfile:
     dest  : "/etc/skel/.bash_aliases"
@@ -103,20 +108,19 @@
 
 #  minc-toolkit-config-1.0.08.sh
 
-- name: "remove /etc/skel/minc-toolkit-config-1.0.08.sh"
+- name: "remove /etc/skel/bin/minc-toolkit-config-1.0.08.sh"
   become: true
-  command: rm -R /etc/skel/minc-toolkit-config-1.0.08.sh
+  command: rm -R /etc/skel/bin/minc-toolkit-config-1.0.08.sh
   when: minc_state == 'absent' or minc_state == 'purge'
   ignore_errors: yes
 
 #  minc-toolkit-config-1.0.08.sh
 
-- name: "remove /etc/skel/minc-toolkit-config.sh"
+- name: "remove /etc/skel/bin/minc-toolkit-config.sh"
   become: true
-  command: rm -R /etc/skel/minc-toolkit-config.sh
+  command: rm -R /etc/skel/bin/minc-toolkit-config.sh
   when: minc_state == 'absent' or minc_state == 'purge'
   ignore_errors: yes
-
 
 # User configuration
 
