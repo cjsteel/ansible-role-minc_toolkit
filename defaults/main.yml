@@ -35,7 +35,7 @@ minc_github_stable_debian_package_url : 'http://packages.bic.mni.mcgill.ca/minc-
 
 
 # minc_local_resource_path      : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
-minc_local_resource_directory   : 'sys/sw/ubuntu/12.04/minc-toolkit/{{ minc_ver }}'
+minc_local_resource_directory   : 'src/Ubuntu/12.04/minc-toolkit/{{ minc_ver }}'
 minc_local_ubuntu_resource_path : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Ubuntu_12.04-x86_64.deb'
 minc_local_debian_resource_path : '{{ minc_local_resource_directory }}/minc-toolkit-{{ minc_ver }}-{{ minc_date }}-Debian_7.1-x86_64.deb'
 minc_remote_resource_directory  : '{{ minc_local_resource_directory }}'

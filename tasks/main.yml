@@ -87,12 +87,8 @@
   when: minc_state == 'absent' or minc_state == 'purge'
   ignore_errors: yes
 
-<<<<<<< HEAD
-#  	path - Before 2.3 this option was only usable as dest, destfile and name.
-=======
 # path - Before 2.3 this option was only usable as dest, destfile and name.
 
->>>>>>> 71aef5c2168d0115a988019cf70724db7af2b537
 - name: remove file name in users bash_aliases
   blockinfile:
     dest  : "/etc/skel/.bash_aliases"
