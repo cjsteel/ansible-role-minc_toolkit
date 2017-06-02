@@ -2,13 +2,15 @@
 ansible-role-minc_toolkit
 =========
 
-An Ansible role to install and manage mint-toolkit. Currently includes support for minc-toolkit binaries version 1.0.08 and 
+## Description
+
+This is an Ansible role to install and manage mint-toolkit installations from a deb packages. Works fine for installing minc-toolkit-v2 binaries version 1.0.08 and probably supports version 1.0.01 as well if that is desired. Although support for compiling from scratch is not included at this time tested instructions for compiling minctoolkit v2 from scratch (Vlads version) is included in the docs folder. Many users are working the version compiled by Claude Lepage ([claude@bic.mni.mcgill.ca](mailto:claude@bic.mni.mcgill.ca)) in CIVET.
 
 
 Requirements
 ------------
 
-* Deployment user on remote system. 
+* A deployment user with administrative (or sudo) permissions on target system(s). 
 
 ## Resources
 
