@@ -90,7 +90,5 @@
         mode:  '0755'
         state: 'template' # options are 'template' or 'absent'
 
-
-
   roles:
     - ../../
