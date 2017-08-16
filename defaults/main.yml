@@ -116,7 +116,7 @@ minc_skel_entries:
       alias src_minctk="source /opt/minc/minc-toolkit-config.sh"
       echo "alias 'src_minctk' created"
       #
-    state: "absent"
+    skel_blockinfile_state: "absent"
 
 ## aliases entry for minc-toolkit-{{ minc_ver }}"
 
@@ -133,7 +133,7 @@ minc_skel_entries:
       alias src_minctk-{{ minc_ver }}="source /opt/minc-{{ minc_ver }}/minc-toolkit-config-{{ minc_ver }}.sh"
       echo "alias 'src_minctk-{{ minc_ver }}' created"
       #
-    state: "absent"
+    skel_blockinfile_state: "absent"
 
 # /etc/skel/bin
 

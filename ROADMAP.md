@@ -2,6 +2,7 @@
 
 ## Planned Changes
 
+* Complete tasks/main.yml for removals(?)
 * minc path should reflect minc version as concieved by https://github.com/BIC-MNI/minc-toolkit-v2 when compiling from scratch. That is:
 
 rather than `/opt/minc-1.0.08/...`
