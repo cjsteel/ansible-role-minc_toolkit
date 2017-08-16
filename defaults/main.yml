@@ -87,7 +87,25 @@ minc_skel_entries:
 
 # .bash_aliases
 
-  - name: "ensure we have an aliase entry for default minc-toolkit version"
+## aliases entry for acemenu
+
+  - name: "ensure we have an aliases entry for acemenu"
+    type: 'blockinfile'
+    marker: '## {mark} ANSIBLE MANAGED BLOCK for acemenu message'
+    path  : "/etc/skel/.bash_aliases"
+    insertafter: "EOF"
+    block: |
+      # ~/.bash_aliases echo entry for acemenu
+      #
+      echo "type 'menu' to launch acemenu"
+      #
+    state: "present"
+
+## aliases entry for default minc-toolkit version
+
+### removing and adding to acemenu
+
+  - name: "ensure we have an aliases entry for default minc-toolkit version"
     type: 'blockinfile'
     marker: '## {mark} ANSIBLE MANAGED BLOCK for default MINC TOOLKIT ALIAS src_minc-toolkit'
     path  : "/etc/skel/.bash_aliases"
@@ -98,9 +116,13 @@ minc_skel_entries:
       alias src_minctk="source /opt/minc/minc-toolkit-config.sh"
       echo "alias 'src_minctk' created"
       #
-    state: "present"
+    state: "absent"
 
-  - name: "ensure we have an aliase entry for minc-toolkit-{{ minc_ver }}"
+## aliases entry for minc-toolkit-{{ minc_ver }}"
+
+### removing and adding to acemenu
+
+  - name: "ensure we have an aliases entry for minc-toolkit-{{ minc_ver }}"
     type: 'blockinfile'
     marker: '## {mark} ANSIBLE MANAGED BLOCK for MINC TOOLKIT ALIAS src_minctk-{{ minc_ver }}'
     path  : "/etc/skel/.bash_aliases"
@@ -111,7 +133,7 @@ minc_skel_entries:
       alias src_minctk-{{ minc_ver }}="source /opt/minc-{{ minc_ver }}/minc-toolkit-config-{{ minc_ver }}.sh"
       echo "alias 'src_minctk-{{ minc_ver }}' created"
       #
-    state: "present"
+    state: "absent"
 
 # /etc/skel/bin
 
@@ -123,14 +145,12 @@ minc_skel_entries:
     state: 'directory' # options are 'directory' or 'absent'
 
   - name: "template /etc/skel/bin/minc-toolkit-config.sh"
-#    src:  'roles/minc/templates/minc-toolkit-config.sh'
     src: '{{ fact_role_path }}/templates/minc-toolkit-config.sh'
     path: '/etc/skel/bin/minc-toolkit-config.sh'
     mode: '0755'
     state: 'template' # options are 'template' or 'absent'
 
   - name:  "template /etc/skel/bin/minc-toolkit-conf-{{ minc_ver}}.sh"
-#    src:   'roles/minc/templates/versioned-minc-toolkit-config.sh'
     src: '{{ fact_role_path }}/templates/versioned-minc-toolkit-config.sh'
     path:  '/etc/skel/bin/minc-toolkit-config-{{ minc_ver }}.sh'
     mode:  '0755'

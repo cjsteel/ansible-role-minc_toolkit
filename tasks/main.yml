@@ -67,7 +67,9 @@
   command: cp -r /opt/minc /opt/minc-'{{ minc_ver }}' chdir=/ creates=/opt/minc-'{{ minc_ver }}'/bin/mincinfo
   when: minc_state == 'present'
 
-## removals
+# removals
+
+## uninstall minc minc-toolkit
 
 - name: "remove minc minc-toolkit"
   become: true
@@ -75,11 +77,15 @@
   when: minc_state == 'absent' or minc_state == 'purge'
   ignore_errors: yes
 
+## delete /opt/minc
+
 - name: "remove /opt/minc"
   become: true
   command: rm -R /opt/minc
   when: minc_state == 'absent' or minc_state == 'purge'
   ignore_errors: yes
+
+## delete /opt/minc/'{{ minc_ver }}'
 
 - name: "remove /opt/minc/'{{ minc_ver }}'"
   become: true
@@ -93,6 +99,7 @@
   blockinfile:
     dest  : "/etc/skel/.bash_aliases"
     marker: "## {mark} ANSIBLE MANAGED BLOCK for $HOME/.bash_aliases"
+    state: absent
   when: minc_state == 'absent' or minc_state == 'purge'
   ignore_errors: yes
 
@@ -100,6 +107,7 @@
   blockinfile:
     dest  : "/etc/skel/.bash_aliases"
     marker: '## {mark} ANSIBLE MANAGED BLOCK for MINC TOOLKIT ALIAS source_minc-toolkit-1.0.88'
+    state: absent
   when: minc_state == 'absent' or minc_state == 'purge'
 
 #  minc-toolkit-config-1.0.08.sh
