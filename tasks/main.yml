@@ -24,23 +24,20 @@
   when: minc_state == 'present'
   tags: [ 'packages', 'utilities' ]
 
-# minc_ver != 1.0.01
-
 ## Gather minc-toolkit resources on remote system
 
-- name: "Download latest stable version of minc toolkit (for ubuntu 12.04) from Github"
+- name: "Download latest stable version of minc toolkit from Github"
   get_url:
     url: '{{ minc_github_stable_ubuntu_package_url }}'
-    dest: '{{ minc_local_ubuntu_resource_path }}'
+    dest: '{{ minc_remote_resource_path }}'
   when: minc_ver != '1.0.01' and minc_state == 'present'
   tags: [ 'packages', 'minc' ]
 
 - name: "Install the lastest version of minc toolkit (for Ubuntu 12.04) available on Github"
   become: true
   apt:
-    deb: '{{ minc_local_ubuntu_resource_path }}'
-    state: 'present'
-  when: minc_ver != '1.0.01' and minc_state == 'present'
+    deb: '{{ minc_local_resource_path }}'
+    state: '{{ minc_state }}'
   tags: [ 'packages', 'minc' ]
 
 # minc_ver == 1.0.01
@@ -48,17 +45,16 @@
 - name: "Download latest stable version of minc toolkit (for ubuntu 12.04) from Github"
   get_url:
     url: '{{ minc_github_stable_debian_package_url }}'
-    dest: '{{ minc_local_debian_resource_path }}'
+    dest: '{{ minc_local_resource_path }}'
   when: minc_ver == '1.0.01' and minc_state == 'present'
   tags: [ 'packages', 'minc' ]
 
-- name: "Install the lastest version of minc toolkit (for Ubuntu 12.04) available on Github"
+- name: "Install the lastest version of minc toolkit"
   become: true
   apt:
-    deb: '{{ minc_local_debian_resource_path }}'
-    state: 'present'
-  when: minc_ver == '1.0.01' and minc_state == 'present'
-  tags: [ 'packages', 'minc' ]
+    deb: '{{ minc_local_resource_path }}'
+    state: '{{ minc_state }}'
+  tags: [ 'packages', 'minc', 'install' ]
 
 # any minc version
 
