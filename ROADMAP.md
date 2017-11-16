@@ -1,5 +1,22 @@
 # file: roles/minc_toolkit/ROADMAP.md
 
+## Bugs
+
+[2017-11-16] Wrong permissions for /opt/minc/
+
+```shell
+jle@ace-ws-36:/opt$ ls -al
+total 32
+drwxr-xr-x  8 root root 4096 Nov 16 10:11 .
+drwxr-xr-x 25 root root 4096 Oct 31 06:23 ..
+drwxr-xr-x  3 root root 4096 Oct 13 16:12 google
+drwxrwxr-x 10 root root 4096 Oct 13 16:13 minc
+drwxr-xr-x 10 root root 4096 Oct 13 16:13 minc-1.0.08
+drwxr-xr-x  3 root root 4096 Oct 13 16:13 mni-display
+drwxr-xr-x  3 root root 4096 Oct 13 16:13 mni-display-2.0.5
+drwxr-xr-x  4 root root 4096 Nov 16 10:11 vagrant
+```
+
 ## Planned Changes
 
 * Complete tasks/main.yml for removals(?)
