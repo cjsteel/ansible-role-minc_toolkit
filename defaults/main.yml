@@ -21,12 +21,12 @@ minc_date    : '20170529'
 
 
 
-minc_package_name: 'minc-toolkit-{{ minc_ver }}-{{ minc_date }}-{{ ansible_distribution }}_{{ ansible_distribution_version }}-{{ ansible_architecture }}.deb'
+minc_package_name: 'minc-toolkit-{{ minc_ver }}-{{ minc_date }}-{{ ansible_distribution | lower }}_{{ ansible_distribution_version }}-{{ ansible_architecture }}.deb'
 
 # fix package name
 minc_github_stable_ubuntu_package_url : 'http://packages.bic.mni.mcgill.ca/minc-toolkit/{{ ansible_os_family }}/{{ minc_package_name }}'
 
-minc_local_resource_directory   : 'src/sw/{{ ansible_distribution }}/{{ ansible_distribution_version }}/minc-toolkit/{{ minc_ver }}'
+minc_local_resource_directory   : 'sw/{{ ansible_distribution }}/{{ ansible_distribution_version }}/minc-toolkit/{{ minc_ver }}'
 minc_local_resource_path        : '{{ minc_local_resource_directory }}/{{ minc_package_name }}'
 
 minc_remote_resource_directory  : '{{ minc_local_resource_directory }}'
